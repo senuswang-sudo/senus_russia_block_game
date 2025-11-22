@@ -1,0 +1,57 @@
+<navigation-bar title="俄罗斯方块" back="{{false}}" color="black" background="#f5f7fb"></navigation-bar>
+<view class="page">
+  <view class="topbar">
+    <view class="stat">
+      <text class="label">得分</text>
+      <text class="value">{{score}}</text>
+    </view>
+    <view class="stat">
+      <text class="label">消行</text>
+      <text class="value">{{lines}}</text>
+    </view>
+    <view class="status status-{{status}}">{{statusText}}</view>
+  </view>
+
+  <view class="play-area">
+    <view class="board">
+      <block wx:for="{{displayBoard}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex">
+        <view class="row">
+          <block wx:for="{{row}}" wx:for-index="colIndex" wx:key="colIndex">
+            <view class="cell cell-{{item}}"></view>
+          </block>
+        </view>
+      </block>
+    </view>
+    <view class="sidebar">
+      <view class="panel">
+        <view class="panel-title">下一个</view>
+        <view class="preview">
+          <block wx:for="{{nextPreview}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex">
+            <view class="mini-row">
+              <block wx:for="{{row}}" wx:for-index="colIndex" wx:key="colIndex">
+                <view class="mini cell-{{item}}"></view>
+              </block>
+            </view>
+          </block>
+        </view>
+      </view>
+      <view class="panel message">{{message}}</view>
+    </view>
+  </view>
+
+  <view class="controls">
+    <view class="control-row">
+      <button size="mini" type="primary" bindtap="startGame">开始/重来</button>
+      <button size="mini" type="default" bindtap="togglePause" disabled="{{status==='idle' || status==='over'}}">{{status==='paused' ? '继续' : '暂停'}}</button>
+      <button size="mini" type="warn" bindtap="hardDrop" disabled="{{status!=='running'}}">一键下落</button>
+    </view>
+    <view class="control-row arrows">
+      <button size="mini" bindtap="moveLeft" disabled="{{status!=='running'}}">左移</button>
+      <button size="mini" bindtap="rotatePiece" disabled="{{status!=='running'}}">旋转</button>
+      <button size="mini" bindtap="moveRight" disabled="{{status!=='running'}}">右移</button>
+    </view>
+    <view class="control-row">
+      <button class="wide" size="mini" type="primary" bindtap="softDrop" disabled="{{status!=='running'}}">加速下落</button>
+    </view>
+  </view>
+</view>
