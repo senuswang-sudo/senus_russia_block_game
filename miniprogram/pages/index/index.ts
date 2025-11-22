@@ -104,6 +104,12 @@ Component({
     message: '点击开始按钮开始游戏',
   },
   lifetimes: {
+    attached() {
+      const loggedIn = wx.getStorageSync('loggedIn')
+      if (!loggedIn) {
+        wx.redirectTo({ url: '/pages/login/login' })
+      }
+    },
     detached() {
       this.stopTimer()
     },

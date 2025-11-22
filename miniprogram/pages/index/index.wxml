@@ -1,4 +1,4 @@
-<navigation-bar title="俄罗斯方块" back="{{false}}" color="black" background="#f5f7fb"></navigation-bar>
+<navigation-bar title="Russia Block" back="{{false}}" color="black" background="#f5f7fb"></navigation-bar>
 <view class="page">
   <view class="topbar">
     <view class="stat">
