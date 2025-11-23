@@ -11,17 +11,17 @@
         <text class="value">{{lines}}</text>
       </view>
       <view class="status status-{{status}}">{{statusText}}</view>
-    </view>
-    <view class="next-panel">
-      <view class="panel-title">下一个</view>
-      <view class="preview">
-        <block wx:for="{{nextPreview}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex">
-          <view class="mini-row">
-            <block wx:for="{{row}}" wx:for-index="colIndex" wx:key="colIndex">
-              <view class="mini cell-{{item}}"></view>
-            </block>
-          </view>
-        </block>
+      <view class="next-inline">
+        <text class="label">下一个</text>
+        <view class="mini-preview">
+          <block wx:for="{{nextPreview}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex">
+            <view class="mini-row">
+              <block wx:for="{{row}}" wx:for-index="colIndex" wx:key="colIndex">
+                <view class="mini cell-{{item}}"></view>
+              </block>
+            </view>
+          </block>
+        </view>
       </view>
     </view>
   </view>
