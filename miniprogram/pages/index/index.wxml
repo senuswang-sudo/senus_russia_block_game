@@ -1,15 +1,29 @@
 <navigation-bar title="Russia Block" back="{{false}}" color="black" background="#f5f7fb"></navigation-bar>
 <view class="page">
   <view class="topbar">
-    <view class="stat">
-      <text class="label">得分</text>
-      <text class="value">{{score}}</text>
+    <view class="stat-group">
+      <view class="stat">
+        <text class="label">得分</text>
+        <text class="value">{{score}}</text>
+      </view>
+      <view class="stat">
+        <text class="label">消行</text>
+        <text class="value">{{lines}}</text>
+      </view>
+      <view class="status status-{{status}}">{{statusText}}</view>
     </view>
-    <view class="stat">
-      <text class="label">消行</text>
-      <text class="value">{{lines}}</text>
+    <view class="next-panel">
+      <view class="panel-title">下一个</view>
+      <view class="preview">
+        <block wx:for="{{nextPreview}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex">
+          <view class="mini-row">
+            <block wx:for="{{row}}" wx:for-index="colIndex" wx:key="colIndex">
+              <view class="mini cell-{{item}}"></view>
+            </block>
+          </view>
+        </block>
+      </view>
     </view>
-    <view class="status status-{{status}}">{{statusText}}</view>
   </view>
 
   <view class="play-area">
@@ -22,22 +36,9 @@
         </view>
       </block>
     </view>
-    <view class="sidebar">
-      <view class="panel">
-        <view class="panel-title">下一个</view>
-        <view class="preview">
-          <block wx:for="{{nextPreview}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex">
-            <view class="mini-row">
-              <block wx:for="{{row}}" wx:for-index="colIndex" wx:key="colIndex">
-                <view class="mini cell-{{item}}"></view>
-              </block>
-            </view>
-          </block>
-        </view>
-      </view>
-      <view class="panel message">{{message}}</view>
-    </view>
   </view>
+
+  <view class="panel message">{{message}}</view>
 
   <view class="controls">
     <view class="control-row">
