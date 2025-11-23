@@ -29,6 +29,14 @@
 
 ## 项目结构（请严格按照结构工作）
 
+- 根目录：`project.config.json` / `project.private.config.json`（小程序配置），`package.json`（依赖与脚本），`tsconfig.json`，`typings/`（类型声明），`README.md`。
+- `miniprogram/`：小程序主目录，包含全局 `app.ts` / `app.json` / `app.less` 与 `sitemap.json`。
+- `miniprogram/components/navigation-bar/`：自定义导航栏组件，含 `.ts/.wxml/.less/.json`。
+- `miniprogram/pages/`：业务页面目录。
+  - `index/`：主页（俄罗斯方块主界面）。
+  - `login/`：登录页面。
+  - `logs/`：日志页面。
+- `miniprogram/utils/util.ts`：通用工具函数。
 
 ## 自定义 Codex 命令（提供给 CLI 使用）
 
@@ -44,4 +52,17 @@
 ### /explain
 解释某段代码用途，不进行修改。
 
+### /checkout-feature
+切换到 `feature_version_init` 分支（跟踪远端）。
 
+### /branch-status
+执行 `git status --short --branch` 查看当前分支与工作区状态。
+
+### /show-diff <file>
+执行 `git diff <file>` 查看指定文件的工作区变更。
+
+### /commit-changes
+执行 `git commit -m "chore: add condition stub to private config"` 提交当前暂存区。
+
+### /push-feature
+执行 `git push origin feature_version_init` 推送到远端（需网络可用）。
