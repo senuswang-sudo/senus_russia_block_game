@@ -1,0 +1,38 @@
+<navigation-bar title="登录" back="{{false}}" color="black" background="#f5f7fb"></navigation-bar>
+<view class="login-page">
+  <view class="hero">
+    <text class="title">Russia Block</text>
+    <text class="subtitle">登录后开始挑战吧</text>
+  </view>
+
+  <view class="card">
+    <view class="card-title">快速登录</view>
+    <view class="card-body">
+      <view class="desc">使用微信授权登录以保存头像昵称，并同步到云端。</view>
+      <button type="primary" class="login-btn" loading="{{loading}}" bindtap="handleProfileLogin">微信授权登录</button>
+      <view wx:if="{{!canUseProfile}}" class="hint">当前基础库不支持 getUserProfile，请升级微信版本</view>
+      <view wx:if="{{cloudWarning}}" class="warn">{{cloudWarning}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">自定义昵称和头像</view>
+    <view class="card-body custom">
+      <view class="section">
+        <view class="section-title">头像</view>
+        <view class="avatar-picker">
+          <button class="avatar-btn" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+            <image class="avatar" src="{{avatarUrl}}"></image>
+          </button>
+        </view>
+      </view>
+      <view class="section">
+        <view class="section-title">昵称</view>
+        <input class="nick-input" placeholder="请输入昵称" value="{{nickName}}" focus="{{nickInputFocus}}" bindtap="chooseNickname" bindinput="onNameInput" bindblur="onNickBlur" />
+      </view>
+      <button type="primary" class="login-btn" loading="{{loading}}" bindtap="handleCustomLogin">使用自定义信息登录</button>
+      <view class="hint">将昵称和头像保存到云数据库，方便再次登录时同步。</view>
+      <view wx:if="{{error}}" class="error">{{error}}</view>
+    </view>
+  </view>
+</view>

@@ -5,19 +5,39 @@ page {
 }
 
 .page {
-  padding: 24rpx;
+  padding: 16rpx 20rpx;
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
+  gap: 20rpx;
   box-sizing: border-box;
   height: calc(100vh - 88rpx);
 }
 
 .topbar {
   display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 20rpx;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.stat-group {
+  display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 16rpx;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.next-inline {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  background: #fff;
+  padding: 12rpx 16rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 8rpx 16rpx rgba(0, 0, 0, 0.08);
 }
 
 .stat {
@@ -64,18 +84,27 @@ page {
 
 .play-area {
   display: flex;
-  gap: 20rpx;
   flex: 1;
-  min-height: 600rpx;
+  width: 100%;
+  min-height: 520rpx;
+  align-items: center;
+  justify-content: center;
+  background: #0b1a2f;
+  border-radius: 20rpx;
+  padding: 16rpx 12rpx;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 0 2rpx rgba(255, 255, 255, 0.06), 0 18rpx 24rpx rgba(0, 0, 0, 0.25);
+  height: auto;
 }
 
 .board {
-  background: #0b1a2f;
-  border-radius: 20rpx;
-  padding: 12rpx;
-  box-shadow: inset 0 0 0 2rpx rgba(255, 255, 255, 0.06), 0 18rpx 24rpx rgba(0, 0, 0, 0.25);
-  flex: 1;
-  max-width: 70%;
+  --cell-size: 36rpx;
+  --cell-gap: 1rpx;
+  background: transparent;
+  padding: 4rpx;
+  flex: 0 0 auto;
+  width: calc(18 * (var(--cell-size) + var(--cell-gap)) + 8rpx);
+  height: calc(28 * (var(--cell-size) + var(--cell-gap)) + 8rpx);
 }
 
 .row {
@@ -83,9 +112,9 @@ page {
 }
 
 .cell {
-  width: 32rpx;
-  height: 32rpx;
-  margin: 2rpx;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  margin: calc(var(--cell-gap) / 2);
   border-radius: 4rpx;
   background: rgba(255, 255, 255, 0.05);
   box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.06);
@@ -113,11 +142,11 @@ page {
   background: linear-gradient(135deg, #5ed9c7, #2bb1b1);
 }
 
-.sidebar {
-  width: 260rpx;
-  display: flex;
-  flex-direction: column;
-  gap: 16rpx;
+.mini-preview {
+  background: #0b1a2f;
+  border-radius: 10rpx;
+  padding: 6rpx;
+  display: inline-block;
 }
 
 .panel {
@@ -133,22 +162,15 @@ page {
   margin-bottom: 12rpx;
 }
 
-.preview {
-  background: #0b1a2f;
-  border-radius: 12rpx;
-  padding: 8rpx;
-  display: inline-block;
-}
-
 .mini-row {
   display: flex;
 }
 
 .mini {
-  width: 28rpx;
-  height: 28rpx;
+  width: 22rpx;
+  height: 22rpx;
   margin: 1rpx;
-  border-radius: 4rpx;
+  border-radius: 3rpx;
   background: rgba(255, 255, 255, 0.05);
 }
 

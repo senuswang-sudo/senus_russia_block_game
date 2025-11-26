@@ -1,6 +1,6 @@
 // index.ts - 俄罗斯方块主逻辑
-const COLS = 10
-const ROWS = 20
+const COLS = 18
+const ROWS = 28
 
 type Status = 'idle' | 'running' | 'paused' | 'over'
 
@@ -77,12 +77,12 @@ const buildDisplayBoard = (board: number[][], piece: Piece | null) => {
   return mergePieceToBoard(board, piece)
 }
 
-const createPreview = (shape: number[][]) => {
+const createPreview = (shape: number[][], shapeIndex = 0) => {
   const grid = Array.from({ length: 4 }, () => Array(4).fill(0))
   shape.forEach((row, y) => {
     row.forEach((cell, x) => {
       if (cell && y < 4 && x < 4) {
-        grid[y][x] = 1
+        grid[y][x] = shapeIndex + 1
       }
     })
   })
@@ -95,7 +95,7 @@ Component({
     displayBoard: createEmptyBoard(),
     current: null as Piece | null,
     nextShape: 0,
-    nextPreview: createPreview(SHAPES[0]),
+    nextPreview: createPreview(SHAPES[0], 0),
     status: 'idle' as Status,
     statusText: '待开始',
     score: 0,
@@ -104,6 +104,12 @@ Component({
     message: '点击开始按钮开始游戏',
   },
   lifetimes: {
+    attached() {
+      const loggedIn = wx.getStorageSync('loggedIn')
+      if (!loggedIn) {
+        wx.redirectTo({ url: '/pages/login/login' })
+      }
+    },
     detached() {
       this.stopTimer()
     },
@@ -115,7 +121,7 @@ Component({
       const nextShape = this.randomShape()
       const piece = this.createPiece(shapeIndex, 0)
       const board = createEmptyBoard()
-      const preview = createPreview(rotateMatrix(SHAPES[nextShape], 0))
+      const preview = createPreview(rotateMatrix(SHAPES[nextShape], 0), nextShape)
       this.stopTimer()
       this.setData({
         board,
@@ -154,14 +160,20 @@ Component({
     },
     hardDrop() {
       if (this.data.status !== 'running' || !this.data.current) return
-      let moved = false
-      while (this.movePiece(0, 1)) {
-        moved = true
-        this.addScore(2)
+      const { current, board, score } = this.data
+      let dropY = current.y
+      // 计算一次性下落距离，避免多次 setData 导致卡顿
+      while (!this.collides({ ...current, y: dropY + 1 }, board)) {
+        dropY++
       }
-      if (moved) {
-        this.lockPiece()
-      }
+      if (dropY === current.y) return
+      const landed = { ...current, y: dropY }
+      this.setData({
+        current: landed,
+        displayBoard: buildDisplayBoard(board, landed),
+        score: score + (dropY - current.y) * 2,
+      })
+      this.lockPiece()
     },
     rotatePiece() {
       if (this.data.status !== 'running' || !this.data.current) return
@@ -241,7 +253,7 @@ Component({
         board: nextBoard,
         current: newPiece,
         nextShape: upcoming,
-        nextPreview: createPreview(SHAPES[upcoming]),
+        nextPreview: createPreview(SHAPES[upcoming], upcoming),
         lines: newLines,
         level: newLevel,
       })
@@ -281,7 +293,7 @@ Component({
       return {
         shapeIndex,
         rotation,
-        x: 3,
+        x: Math.floor((COLS - blocks[0].length) / 2),
         y: 0,
         blocks,
       }
